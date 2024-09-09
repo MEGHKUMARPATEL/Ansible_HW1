@@ -1,0 +1,20 @@
+- name: undeploy web server on VM's
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Stop nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: stopped
+
+
+    - name: Removing nginx package
+      ansible.builtin.apt:
+        name: nginx
+        state: absent
+
+
+    - name: Removing index.html file
+      ansible.builtin.file:
+        path: /var/www/html/index.html
+        state: absent
